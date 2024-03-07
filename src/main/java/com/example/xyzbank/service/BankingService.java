@@ -5,6 +5,7 @@ import com.example.xyzbank.domain.BankAccount;
 import com.example.xyzbank.domain.Customer;
 import com.example.xyzbank.domain.userdetails.RoleEnum;
 import com.example.xyzbank.domain.userdetails.User;
+import com.example.xyzbank.dto.OverviewResponse;
 import com.example.xyzbank.dto.RegisterRequest;
 import com.example.xyzbank.dto.RegisterResponse;
 import com.example.xyzbank.exception.FileStorageException;
@@ -14,6 +15,7 @@ import org.apache.tika.Tika;
 import org.apache.tika.mime.MimeTypeException;
 import org.apache.tika.mime.MimeTypes;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -22,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 
 import static com.example.xyzbank.service.DatabaseInitializer.ACCOUNTTYPE_PERSONAL;
 import static com.example.xyzbank.service.DatabaseInitializer.CURRENCY_EUR;
@@ -116,5 +119,14 @@ public class BankingService {
      * Ideally these entered values should be validated against a government-managed datasource for Dutch and Belgian addresses e.g: BAG & CADGIS
      * and store their reference ID's instead of keeping track of columns like "street", "postal code" and "city" which change over time, and thus are unmanageable from within this module
      */
+
+    public OverviewResponse getOverview(Principal principal) {
+        BankAccount bankAccount = bankAccountRepository.findBankAccountByUser_Username(principal.getName())
+                .orElseThrow(() -> {
+                    throw new UsernameNotFoundException(principal.getName());
+                });
+
+        return new OverviewResponse(bankAccount.getIban(), bankAccount.getAccountType().getName(), bankAccount.getCurrency().getIso(), bankAccount.getBalance());
+    }
 }
 
