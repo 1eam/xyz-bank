@@ -1,5 +1,6 @@
 package com.example.xyzbank.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,7 @@ public record RegisterRequest(
         String firstName,
         @NotNull
         String lastName,
-        @NotNull //TODO: VALIDATE AGE
+        @NotNull @Min(value = 18, message = "Age should not be less than 18")
         LocalDate dateOfBirth,
         @NotNull
         String street,
