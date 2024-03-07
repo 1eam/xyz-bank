@@ -1,5 +1,6 @@
 package com.example.xyzbank.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -28,5 +29,10 @@ public class ExceptionHandlers {
     @ExceptionHandler(FileStorageException.class)
     public ResponseEntity<?> FileStorageException(FileStorageException exp) {
         return new ResponseEntity<>(Map.of("fileStorageException", exp.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> FileStorageException(DataIntegrityViolationException exp) {
+        return new ResponseEntity<>(Map.of("dataIntegrityViolationException", exp.getRootCause().getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

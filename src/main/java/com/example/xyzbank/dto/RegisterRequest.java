@@ -1,6 +1,7 @@
 package com.example.xyzbank.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 public record RegisterRequest(
         @NotNull
         String oneTimePassword,
-        @NotNull //TODO: ADD EXCEPTION HANDLER FOR EXISTING USERNAME
+        @NotNull @Size(min=10, message = "Username should not be less than 10 characters")
         String username,
         @NotNull
         String password,
