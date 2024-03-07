@@ -22,14 +22,12 @@ import java.util.Arrays;
 @Component
 public class DatabaseInitializer {
 
-    public static final String COUNTRY_ISO_NL = "NL";
-    public static final String COUNTRY_ISO_BE = "BE";
     public static final String ACCOUNTTYPE_PERSONAL = "PERSONAL";
     public static final String ACCOUNTTYPE_BUSINESS = "BUSINESS";
-    public static final String CURRENCY_EUR = CountryCode.getByCode(COUNTRY_ISO_NL).getAlpha2().toUpperCase(); //EUR
-    public static final String CURRENCY_USD = CountryCode.getByCode(COUNTRY_ISO_BE).getAlpha2().toUpperCase(); //USD
-    public static final String COUNTRY_NAME_NETHERLANDS = CountryCode.getByCode(COUNTRY_ISO_NL).getName(); //NETHERLANDS
-    public static final String COUNTRY_NAME_BELGIUM = CountryCode.getByCode(COUNTRY_ISO_BE).getName(); //BELGIUM
+    public static final String CURRENCY_EUR = CountryCode.getByCode(CountryCode.NL.name()).getAlpha2().toUpperCase(); //EUR
+    public static final String CURRENCY_USD = CountryCode.getByCode(CountryCode.US.name()).getAlpha2().toUpperCase(); //USD
+    public static final String COUNTRY_NAME_NETHERLANDS = CountryCode.getByCode(CountryCode.NL.name()).getName(); //NETHERLANDS
+    public static final String COUNTRY_NAME_BELGIUM = CountryCode.getByCode(CountryCode.BE.name()).getName(); //BELGIUM
 
     private RoleRepository roleRepository;
     private CurrencyRepository currencyRepository;
@@ -63,8 +61,8 @@ public class DatabaseInitializer {
         );
 
         countryRepository.saveAll(Arrays.asList(
-                new Country(COUNTRY_ISO_NL, COUNTRY_NAME_NETHERLANDS),
-                new Country(COUNTRY_ISO_BE, COUNTRY_NAME_BELGIUM))
+                new Country(CountryCode.NL.name(), COUNTRY_NAME_NETHERLANDS),
+                new Country(CountryCode.BE.name(), COUNTRY_NAME_BELGIUM))
         );
     }
 }

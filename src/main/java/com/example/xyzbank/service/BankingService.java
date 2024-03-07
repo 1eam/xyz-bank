@@ -10,7 +10,6 @@ import com.example.xyzbank.dto.RegisterResponse;
 import com.example.xyzbank.exception.FileStorageException;
 import com.example.xyzbank.repository.*;
 import jakarta.transaction.Transactional;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.tika.Tika;
 import org.apache.tika.mime.MimeTypeException;
 import org.apache.tika.mime.MimeTypes;
@@ -54,17 +53,11 @@ public class BankingService {
     @Transactional
     public RegisterResponse register(RegisterRequest registerRequest) {
 
-        //TODO: Add exception handlers for unique username + Validate username by minimal size (8)
-
-        //TODO: Validate age
-
-        //TODO: Autogenerate IBAN within bank account entity
-
         //TODO: Autogenerate default password within user entity, (remove password from RegisterRequest)
 
         return new RegisterResponse(
                 bankAccountRepository.save(BankAccount
-                        .createBankAccount(RandomStringUtils.randomAlphanumeric(18).toUpperCase(), accountTypeRepository.findByName(ACCOUNTTYPE_PERSONAL), currencyRepository.findByIso(CURRENCY_EUR), User
+                        .createBankAccount(accountTypeRepository.findByName(ACCOUNTTYPE_PERSONAL), currencyRepository.findByIso(CURRENCY_EUR), User
                                 .createUser(registerRequest.username(), registerRequest.password(), roleRepository.getByRole(RoleEnum.USER), Customer
                                         .createCustomer(storeGovernmentIdFile(registerRequest), registerRequest.firstName(), registerRequest.lastName(), registerRequest.dateOfBirth(),
                                                 addressRepository.findByStreetAndHouseNumberAndPostalCodeAndCityAndCountry_Iso(registerRequest.street(), registerRequest.houseNumber(), registerRequest.postalCode(), registerRequest.city(), registerRequest.country())

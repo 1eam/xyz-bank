@@ -1,7 +1,10 @@
 package com.example.xyzbank.domain;
 
+import com.example.xyzbank.domain.iban.BankCode;
+import com.example.xyzbank.domain.iban.CountryCode;
 import com.example.xyzbank.domain.userdetails.User;
 import jakarta.persistence.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -42,16 +45,16 @@ public class BankAccount {
     public BankAccount() {
     }
 
-    private BankAccount(String iban, AccountType accountType, Currency currency, User user) {
+    private BankAccount(AccountType accountType, Currency currency, User user) {
         this.balance = 0.0f;
-        this.iban = iban;
+        this.iban = generateIban();
         this.accountType = accountType;
         this.currency = currency;
         this.user = user;
     }
 
-    public static BankAccount createBankAccount(String iban, AccountType accountType, Currency currency, User user) {
-        return new BankAccount(iban, accountType, currency, user);
+    public static BankAccount createBankAccount(AccountType accountType, Currency currency, User user) {
+        return new BankAccount(accountType, currency, user);
     }
 
     public Long getId() {
@@ -136,4 +139,14 @@ public class BankAccount {
                 ", lastModifiedDate=" + lastModifiedDate +
                 '}';
     }
+
+    private String generateIban() {
+        String countryCode = CountryCode.getRandom().name();
+        String checksum = RandomStringUtils.randomNumeric(2);
+        String bankCode = BankCode.getRandom().name();
+        String accountNumber = RandomStringUtils.randomNumeric(10);
+
+        return countryCode + checksum + bankCode + accountNumber;
+    }
+
 }

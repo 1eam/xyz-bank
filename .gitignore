@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### XYZ BANK REPO ###
+/xyz-bank-upload-directory
