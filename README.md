@@ -33,6 +33,9 @@ services:
     ports:
       - "8080:8080"
     environment:
+      datasource_url: jdbc:postgresql://host.docker.internal:5432/xyz-bank
+      database_username: admin
+      database_password: admin
       xyz-bank-upload-directory: xyz-bank-upload-directory
   postgres:
     image: postgres

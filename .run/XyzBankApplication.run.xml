@@ -1,6 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="XyzBankApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
     <envs>
+      <env name="database_password" value="admin" />
+      <env name="database_username" value="admin" />
+      <env name="datasource_url" value="jdbc:postgresql://localhost:5432/xyz-bank" />
       <env name="xyz-bank-upload-directory" value="xyz-bank-upload-directory" />
     </envs>
     <module name="xyz-bank.main" />
