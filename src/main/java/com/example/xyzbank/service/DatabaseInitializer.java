@@ -22,14 +22,14 @@ import java.util.Arrays;
 @Component
 public class DatabaseInitializer {
 
+    public static final String COUNTRY_ISO_NL = "NL";
+    public static final String COUNTRY_ISO_BE = "BE";
     public static final String ACCOUNTTYPE_PERSONAL = "PERSONAL";
     public static final String ACCOUNTTYPE_BUSINESS = "BUSINESS";
-    public static final String CURRENCY_EUR = CountryCode.getByCode("NL").getAlpha2().toUpperCase(); //EUR
-    public static final String CURRENCY_USD = CountryCode.getByCode("US").getAlpha2().toUpperCase(); //USD
-    public static final String COUNTRY_ISO_NL = CountryCode.getByCode("NL").getAlpha2(); //NL
-    public static final String COUNTRY_ISO_BE = CountryCode.getByCode("BE").getAlpha2(); //NL
-    public static final String COUNTRY_NAME_NETHERLANDS = CountryCode.getByCode("NL").getName(); //NETHERLANDS
-    public static final String COUNTRY_NAME_BELGIUM = CountryCode.getByCode("BE").getName(); //NETHERLANDS
+    public static final String CURRENCY_EUR = CountryCode.getByCode(COUNTRY_ISO_NL).getAlpha2().toUpperCase(); //EUR
+    public static final String CURRENCY_USD = CountryCode.getByCode(COUNTRY_ISO_BE).getAlpha2().toUpperCase(); //USD
+    public static final String COUNTRY_NAME_NETHERLANDS = CountryCode.getByCode(COUNTRY_ISO_NL).getName(); //NETHERLANDS
+    public static final String COUNTRY_NAME_BELGIUM = CountryCode.getByCode(COUNTRY_ISO_BE).getName(); //BELGIUM
 
     private RoleRepository roleRepository;
     private CurrencyRepository currencyRepository;
