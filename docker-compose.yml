@@ -1,0 +1,33 @@
+#This docker-composefile serves the purpose to spin up a local development environment (-use solely during development)
+version: '3'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - 8081:8080
+      - 50000:50000
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /usr/bin/docker:/usr/bin/docker
+      - /var/run/docker.sock:/var/run/docker.sock
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    shm_size: 256mb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: xyz-bank
+      PGDATA: /data/postgres
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+volumes:
+      jenkins_home:
+      postgres_db:
