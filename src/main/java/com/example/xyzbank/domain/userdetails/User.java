@@ -2,6 +2,7 @@ package com.example.xyzbank.domain.userdetails;
 
 import com.example.xyzbank.domain.Customer;
 import jakarta.persistence.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,15 +34,15 @@ public class User implements UserDetails {
     public User() {
     }
 
-    private User(String username, String password, Role role, Customer customer) {
+    private User(String username, Role role, Customer customer) {
         this.username = username;
-        this.password = password;
+        this.password = generatePassword();
         this.role = role;
         this.customer = customer;
     }
 
-    public static User createUser(String username, String password, Role role, Customer customer) {
-        return new User(username, password, role, customer);
+    public static User createUser(String username, Role role, Customer customer) {
+        return new User(username, role, customer);
     }
 
     public Long getId() {
@@ -129,5 +130,9 @@ public class User implements UserDetails {
                 ", customer=" + customer +
                 ", role=" + role +
                 '}';
+    }
+
+    private String generatePassword() {
+        return RandomStringUtils.randomAlphanumeric(16);
     }
 }

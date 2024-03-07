@@ -53,12 +53,10 @@ public class BankingService {
     @Transactional
     public RegisterResponse register(RegisterRequest registerRequest) {
 
-        //TODO: Autogenerate default password within user entity, (remove password from RegisterRequest)
-
         return new RegisterResponse(
                 bankAccountRepository.save(BankAccount
                         .createBankAccount(accountTypeRepository.findByName(ACCOUNTTYPE_PERSONAL), currencyRepository.findByIso(CURRENCY_EUR), User
-                                .createUser(registerRequest.username(), registerRequest.password(), roleRepository.getByRole(RoleEnum.USER), Customer
+                                .createUser(registerRequest.username(), roleRepository.getByRole(RoleEnum.USER), Customer
                                         .createCustomer(storeGovernmentIdFile(registerRequest), registerRequest.firstName(), registerRequest.lastName(), registerRequest.dateOfBirth(),
                                                 addressRepository.findByStreetAndHouseNumberAndPostalCodeAndCityAndCountry_Iso(registerRequest.street(), registerRequest.houseNumber(), registerRequest.postalCode(), registerRequest.city(), registerRequest.country())
                                                 .orElse(Address.createAddress(registerRequest.street(), registerRequest.houseNumber(), registerRequest.postalCode(), registerRequest.city(), countryRepository.getByIso(registerRequest.country())))

@@ -14,8 +14,6 @@ public record RegisterRequest(
         @NotNull @Size(min = 10, message = "Username should not be less than 10 characters")
         String username,
         @NotNull
-        String password,
-        @NotNull
         MultipartFile governmentId,
         @NotNull
         String firstName,
