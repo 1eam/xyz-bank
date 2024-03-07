@@ -1,0 +1,4 @@
+# Alternative to using postman, solely meant during local development with IntelliJ's http client. For more information visit: https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html
+GET /api/v1/banking/overview HTTP/1.1
+Host: localhost:8080
+Authorization: Basic username_1 password123
